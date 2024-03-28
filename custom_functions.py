@@ -35,7 +35,6 @@ def standard_normal(rows, columns):
 # This sample wouldn't work for single cells and 1-dimensional ranges if
 # ndim=2 is left away
 
-
 @pro.func
 @pro.arg("values", ndim=2)
 def add_one(values):
