@@ -19,7 +19,6 @@ def hello(name):
 # NUMPY.STANDARD_NORMAL in Excel. Multi-dimensional arrays are automatically
 # spilled via Excel's native dynamic arrays, no code change required.
 
-
 @pro.func(namespace="numpy")
 @pro.arg("rows", doc="the number of rows in the returned array.")
 @pro.arg("columns", doc="the number of columns in the returned array.")
