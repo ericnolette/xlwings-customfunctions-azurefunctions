@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>xlwings Task Pane</title>
-    <!-- Load office.js and xlwings.min.js -->
-    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/gh/xlwings/xlwings@0.30.10/xlwingsjs/dist/xlwings.min.js"
-      integrity="sha384-wvwFa5Yc8yushDMrEklcwsJOMNUtDI3CrTdTLdp9g6OXBHEqD0BgTWQ3B9PWlprD"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Bootstrap with the xlwings theme -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/xlwings/bootstrap-xlwings@5.2.3-2/dist/bootstrap-xlwings.min.css"
-      integrity="sha384-TZ8CaOSXLBEEL73Aw1vX6a/2YP7QHdiuilF2C8Put8X81F3FzyRgt9ba77CMKAXq"
-      crossorigin="anonymous"
-    />
-    <!-- Load custom functions -->
-    <script src="/api/xlwings/custom-functions-code"></script>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>xlwings Task Pane</title>
+  <!-- Load office.js -->
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <!-- Load xlwings.min.js with integrity check -->
+  <script
+    src="https://cdn.jsdelivr.net/gh/xlwings/xlwings@0.30.10/xlwingsjs/dist/xlwings.min.js"
+    integrity="sha384-wvwFa5Yc8yushDMrEklcwsJOMNUtDI3CrTdTLdp9g6OXBHEqD0BgTWQ3B9PWlprD"
+    crossorigin="anonymous"
+  ></script>
+  <!-- Bootstrap with xlwings theme -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/xlwings/bootstrap-xlwings@5.2.3-2/dist/bootstrap-xlwings.min.css"
+    integrity="sha384-TZ8CaOSXLBEEL73Aw1vX6a/2YP7QHdiuilF2C8Put8X81F3FzyRgt9ba77CMKAXq"
+    crossorigin="anonymous"
+  />
+</head>
 
-  <body class="p-3">
-    <h1>Custom Functions</h1>
-    <p>
-      You can close this task pane and start using the custom functions in the
-      cells.
-    </p>
-    <script>
-      Office.onReady(function (info) {});
+<body class="p-3">
+  <h1>Custom Functions</h1>
+  <p>
+    You can close this task pane and start using the custom functions in the cells.
+  </p>
+  <script>
+    Office.onReady(function (info) {
+      // Office is ready, you can now use xlwings and interact with Office
+    });
 
-      // This is required for authentication and must not be deleted
-      globalThis.getAuth = async function () {
-        return "";
-      };
-    </script>
-  </body>
+    // This is required for authentication and must not be deleted
+    globalThis.getAuth = async function () {
+      return "";
+    };
+  </script>
+  <!-- Load custom functions -->
+  <script src="/api/xlwings/custom-functions-code"></script>
+</body>
 </html>
