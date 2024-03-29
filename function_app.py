@@ -44,7 +44,7 @@ def custom_functions_code(req: func.HttpRequest):
     """This endpoint delivers the Office.js function wrappers"""
     return func.HttpResponse(
         xw.pro.custom_functions_code(
-            custom_functions, "/api/xlwings/custom-functions-call"
+            custom_functions, "/xlwings/custom-functions-call"
         ),
         mimetype="text/javascript",
     )
