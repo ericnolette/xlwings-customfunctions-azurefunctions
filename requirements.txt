@@ -6,4 +6,3 @@ azure-functions
 xlwings
 pandas
 numpy
-##
