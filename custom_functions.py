@@ -12,7 +12,6 @@ from xlwings import pro
 def hello(name):
     return f"Hello {name}!"
 
-
 # SAMPLE 2: Numpy, Namespace, doc strings, dynamic arrays
 # This sample also shows how you set a namespace and add description to the
 # function and its arguments. The namespace makes this function turn up as
