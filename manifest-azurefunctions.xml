@@ -10,8 +10,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="xlwings Azure Functions" />
   <Description DefaultValue="This is the xlwings quickstart app" />
-  <!-- <IconUrl DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-32.png" /> -->
-  <!-- <HighResolutionIconUrl DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-64.png" /> -->
+  <IconUrl DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-64.png" />
   <SupportUrl DefaultValue="https://www.xlwings.org/contact" />
   <AppDomains>
     <AppDomain>https://datamachinesdma.azurewebsites.net</AppDomain>
@@ -59,11 +59,11 @@
             <OfficeTab id="TabHome">
               <Group id="MyCommandsGroup">
                 <Label resid="MyCommandsGroup.Label" />
-                <!-- <Icon>
+                <Icon>
                   <bt:Image size="16" resid="Icon.16x16" />
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
-                </Icon> -->
+                </Icon>
 
                 <!-- Ribbon button that opens the task pane -->
                 <Control xsi:type="Button" id="MyTaskpaneButton">
@@ -72,11 +72,11 @@
                     <Title resid="MyTaskpaneButton.Label" />
                     <Description resid="MyTaskpaneButton.Tooltip" />
                   </Supertip>
-                  <!-- <Icon>
+                  <Icon>
                     <bt:Image size="16" resid="Icon.16x16" />
                     <bt:Image size="32" resid="Icon.32x32" />
                     <bt:Image size="80" resid="Icon.80x80" />
-                  </Icon> -->
+                  </Icon>
                   <Action xsi:type="ShowTaskpane">
                     <TaskpaneId>ButtonId1</TaskpaneId>
                     <SourceLocation resid="Taskpane.Url" />
@@ -91,11 +91,11 @@
     </Hosts>
 
     <Resources>
-      <!-- <bt:Images> -->
-        <!-- <bt:Image id="Icon.16x16" DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-16.png" />
+      <bt:Images>
+        <bt:Image id="Icon.16x16" DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-16.png" />
         <bt:Image id="Icon.32x32" DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-32.png" />
-        <bt:Image id="Icon.80x80" DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-80.png" /> -->
-      <!-- </bt:Images> -->
+        <bt:Image id="Icon.80x80" DefaultValue="https://datamachinesdma.azurewebsites.net/icons/icon-80.png" />
+      </bt:Images>
       <bt:Urls>
         <bt:Url id="Taskpane.Url" DefaultValue="https://datamachinesdma.azurewebsites.net/api/taskpane.html" />
         <bt:Url id="Functions.Script.Url" DefaultValue="https://datamachinesdma.azurewebsites.net/api/xlwings/custom-functions-code"/>
