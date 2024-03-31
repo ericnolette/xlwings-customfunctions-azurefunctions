@@ -7,6 +7,9 @@ from xlwings import pro
 from google.oauth2 import service_account
 from google.cloud import bigquery
 
+credentials = service_account.Credentials.from_service_account_info(
+    os.environ["GCP_SA"]
+)
 
 # SAMPLE 1: Hello World
 @pro.func
