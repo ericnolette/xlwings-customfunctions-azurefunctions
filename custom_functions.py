@@ -4,11 +4,6 @@ import numpy as np
 import pandas as pd
 import xlwings as xw
 from xlwings import pro
-from google.oauth2 import service_account
-from google.cloud import bigquery
-credentials = service_account.Credentials.from_service_account_info(
-    os.environ["GCP_SA"]
-)
 
 # SAMPLE 1: Hello World
 @pro.func
@@ -102,20 +97,3 @@ def timeseries_start(df):
 @pro.func(volatile=True)
 def last_calculated():
     return f"Last calculated: {dt.datetime.now()}"
-
-# @pro.func
-# async def layoffs_fyi():
-#     sql = '''  
-#     SELECT 
-#     date(date) as date,
-#     company,
-#     employees_laid_off,
-#     concat(cast(round(percent_laid_off*100,2) as string),"%") as percent_laid_off,
-#     datamachine_load_time
-#     FROM `datamachine-407200.macro.layoffs_fyi`
-#     WHERE datamachine_load_time = (select max(datamachine_load_time) from `datamachine-407200.macro.layoffs_fyi`)
-#     ORDER BY date desc
-#     '''
-#     async with bigquery.Client(credentials=credentials) as client:
-#         df = client.query(sql).to_dataframe()
-#     return df
