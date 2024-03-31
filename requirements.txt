@@ -6,3 +6,4 @@ azure-functions==1.15.0
 xlwings==0.30.10
 pandas==2.0.2
 google-cloud-bigquery
+google-auth
