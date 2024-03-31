@@ -103,7 +103,7 @@ def last_calculated():
 
 
 
-@pro.func(namespace="pandas")
+@pro.func
 def layoffs_fyi():
     sql = """
     SELECT 
