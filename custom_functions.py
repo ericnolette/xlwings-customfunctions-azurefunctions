@@ -9,6 +9,9 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy import text
 import logging
 import json
+from google.oauth2 import service_account
+from google.cloud import bigquery
+import pandas as pd
 
 try:
     engine = create_engine('bigquery://', credentials_info=json.loads(json.dumps(os.environ["GCP_SA"])))
@@ -22,6 +25,24 @@ def print_client_engine():
     try:
         engine = create_engine('bigquery://', credentials_info=json.loads(json.dumps(os.environ["GCP_SA"])))
         message = f"Engine: {engine}"
+    except Exception as e:
+        message = f"Error: {e}"
+    return message
+
+@pro.func
+def print_gcp_client():
+    try:
+        gcp_client = bigquery.Client(credentials=service_account.Credentials.from_service_account_info(json.loads(json.dumps(os.environ["GCP_SA"]))))
+        message = f"Client: {gcp_client}"
+    except Exception as e:
+        message = f"Error: {e}"
+    return message
+
+@pro.func
+def print_gcp_string():
+    try:
+        gcp_string = json.loads(json.dumps(os.environ["GCP_SA"]))
+        message = f"String: {gcp_string}"
     except Exception as e:
         message = f"Error: {e}"
     return message
