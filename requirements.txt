@@ -10,3 +10,4 @@ google-cloud-bigquery-storage
 google-auth
 sqlalchemy==1.3.23
 pybigquery
+db-dtypes
