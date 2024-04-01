@@ -4,12 +4,11 @@ import numpy as np
 import pandas as pd
 import xlwings as xw
 from xlwings import pro
-from google.oauth2 import service_account
-from google.cloud import bigquery
+from sqlalchemy import *
+from sqlalchemy.engine import create_engine
+from sqlalchemy import text
 
-credentials = service_account.Credentials.from_service_account_info(
-    os.environ["GCP_SA"]
-)
+engine = create_engine('bigquery://', credentials_info=os.environ["GCP_SA"])
 
 # SAMPLE 1: Hello World
 @pro.func
@@ -108,7 +107,7 @@ def last_calculated():
 
 @pro.func
 def layoffs_fyi():
-    sql = """
+    sql = '''  
     SELECT 
     date(date) as date,
     company,
@@ -118,6 +117,7 @@ def layoffs_fyi():
     FROM `datamachine-407200.macro.layoffs_fyi`
     WHERE datamachine_load_time = (select max(datamachine_load_time) from `datamachine-407200.macro.layoffs_fyi`)
     ORDER BY date desc
-    """
-    df = client.query(sql).to_dataframe()
-    return df
+    '''
+    with engine.begin() as conn:
+        df = conn.execute(text(sql)).fetchall()
+    return pd.DataFrame(df)
