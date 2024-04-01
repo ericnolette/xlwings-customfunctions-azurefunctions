@@ -8,6 +8,7 @@ from sqlalchemy import *
 from sqlalchemy.engine import create_engine
 from sqlalchemy import text
 import logging
+import json
 
 try:
     engine = create_engine('bigquery://', credentials_info=os.environ["GCP_SA"])
@@ -18,8 +19,12 @@ except Exception as e:
 
 @pro.func
 def print_client_engine():
-    engine = create_engine('bigquery://', credentials_info=os.environ["GCP_SA"])
-    return engine
+    try:
+        engine = create_engine('bigquery://', credentials_info=json.load(os.environ["GCP_SA"]))
+        message = f"Engine: {engine}"
+    except Exception as e:
+        message = f"Error: {e}"
+    return message
 
 # SAMPLE 1: Hello World
 @pro.func
