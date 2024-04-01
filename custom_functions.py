@@ -4,39 +4,29 @@ import numpy as np
 import pandas as pd
 import xlwings as xw
 from xlwings import pro
-from sqlalchemy import *
-from sqlalchemy.engine import create_engine
-from sqlalchemy import text
+import ast
 import logging
 import json
 from google.oauth2 import service_account
 from google.cloud import bigquery
-import pandas as pd
 
+GCP_SA = ast.literal_eval(json.dumps(json.JSONDecoder().decode(os.environ['GCP_SA'])))
 
 try:
-    credentials_env = os.environ["GCP_SA"]
-    client = bigquery.Client.from_service_account_info(credentials_env)
+    credentials = service_account.Credentials.from_service_account_info(GCP_SA)
+    client = bigquery.Client(credentials=credentials)
 except Exception as e:
-    print(e)
+    logging.error(f"Error: {e}")
 
-pro.func
+
+@pro.func
 def get_credentials():
     try:
-        credentials_env = os.environ["GCP_SA"]
-        credentials = service_account.Credentials.from_service_account_info(credentials_env)
+        credentials = service_account.Credentials.from_service_account_info(GCP_SA)
         client = bigquery.Client(credentials=credentials)
-        return client
+        return str(client)
     except Exception as e:
-        return print(e)
-
-def get_creds_parsed():
-    try:
-        credentials = service_account.Credentials.from_service_account_info(json.dumps(json.JSONDecoder().decode(os.environ["GCP_SA"])))
-        return credentials
-    except Exception as e:
-        return print(e)
-
+        return str(e)
 
 # SAMPLE 1: Hello World
 @pro.func
@@ -131,23 +121,6 @@ def timeseries_start(df):
 def last_calculated():
     return f"Last calculated: {dt.datetime.now()}"
 
-
-@pro.func
-def layoffs_fyi():
-    sql = '''  
-    SELECT 
-    date(date) as date,
-    company,
-    employees_laid_off,
-    concat(cast(round(percent_laid_off*100,2) as string),"%") as percent_laid_off,
-    datamachine_load_time
-    FROM `datamachine-407200.macro.layoffs_fyi`
-    WHERE datamachine_load_time = (select max(datamachine_load_time) from `datamachine-407200.macro.layoffs_fyi`)
-    ORDER BY date desc
-    '''
-    with engine.begin() as conn:
-        df = conn.execute(text(sql)).fetchall()
-    return pd.DataFrame(df)
 
 @pro.func
 def layoffs_fyi():
