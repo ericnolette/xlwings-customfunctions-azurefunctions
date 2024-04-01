@@ -13,9 +13,6 @@ from google.cloud import bigquery
 GCP_SA = ast.literal_eval(json.dumps(json.JSONDecoder().decode(os.environ['GCP_SA'])))
 credentials = service_account.Credentials.from_service_account_info(GCP_SA)
 
-
-
-
 # SAMPLE 1: Hello World
 @pro.func
 def hello(name):
