@@ -11,22 +11,10 @@ from google.oauth2 import service_account
 from google.cloud import bigquery
 
 GCP_SA = ast.literal_eval(json.dumps(json.JSONDecoder().decode(os.environ['GCP_SA'])))
-
-try:
-    credentials = service_account.Credentials.from_service_account_info(GCP_SA)
-    client = bigquery.Client(credentials=credentials)
-except Exception as e:
-    logging.error(f"Error: {e}")
+credentials = service_account.Credentials.from_service_account_info(GCP_SA)
 
 
-@pro.func
-def get_credentials():
-    try:
-        credentials = service_account.Credentials.from_service_account_info(GCP_SA)
-        client = bigquery.Client(credentials=credentials)
-        return str(client)
-    except Exception as e:
-        return str(e)
+
 
 # SAMPLE 1: Hello World
 @pro.func
@@ -124,16 +112,20 @@ def last_calculated():
 
 @pro.func
 def layoffs_fyi():
-    sql = '''  
-    SELECT 
-    date(date) as date,
-    company,
-    employees_laid_off,
-    concat(cast(round(percent_laid_off*100,2) as string),"%") as percent_laid_off,
-    datamachine_load_time
-    FROM `datamachine-407200.macro.layoffs_fyi`
-    WHERE datamachine_load_time = (select max(datamachine_load_time) from `datamachine-407200.macro.layoffs_fyi`)
-    ORDER BY date desc
-    '''
-    df = client.query(sql).to_dataframe()
-    return df
+    try:
+        sql = '''  
+        SELECT 
+        date(date) as date,
+        company,
+        employees_laid_off,
+        concat(cast(round(percent_laid_off*100,2) as string),"%") as percent_laid_off,
+        datamachine_load_time
+        FROM `datamachine-407200.macro.layoffs_fyi`
+        WHERE datamachine_load_time = (select max(datamachine_load_time) from `datamachine-407200.macro.layoffs_fyi`)
+        ORDER BY date desc
+        '''
+        with bigquery.Client(credentials=credentials) as client:
+            df = client.query(sql).to_dataframe()
+        return df
+    except Exception as e:
+        return str(e)
