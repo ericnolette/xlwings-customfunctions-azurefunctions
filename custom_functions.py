@@ -20,7 +20,7 @@ except Exception as e:
 @pro.func
 def print_client_engine():
     try:
-        engine = create_engine('bigquery://', credentials_info=os.environ["GCP_SA"])
+        engine = create_engine('bigquery://', credentials_info=json.dumps(os.environ["GCP_SA"]))
         message = f"Engine: {engine}"
     except Exception as e:
         message = f"Error: {e}"
