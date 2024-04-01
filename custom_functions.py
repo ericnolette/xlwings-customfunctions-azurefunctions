@@ -127,3 +127,27 @@ def layoffs_fyi():
         return df
     except Exception as e:
         return str(e)
+    
+@pro.func
+def loopnet_usd_sqft():
+    try:
+        sql = '''
+        select * from `datamachine-407200.commercial_real_estate.loopnet_agg`
+        '''
+        with bigquery.Client(credentials=credentials) as client:
+            data = client.query(sql).to_dataframe()
+            data['sum_min_size_sqft'] = data['sum_min_size_sqft'].astype(float).replace({0: np.NaN})
+            data['avg_usd_sqft_yr'] = data['avg_usd_sqft_yr'].astype(float).replace({0: np.NaN})
+            data['avg_usd_yr'] = data['avg_usd_yr'].astype(float).replace({0: np.NaN})
+            data['datamachine_load_time'] = pd.to_datetime(data['datamachine_load_time'])
+            data = data.drop_duplicates()
+            df = data.groupby(['formatted_address','datamachine_load_time'])['avg_usd_sqft_yr'].last().reset_index().pivot(index='datamachine_load_time', columns='formatted_address', values='avg_usd_sqft_yr').resample('D').mean()
+            df['average'] = df.mean(axis=1)
+            df = df.bfill().transpose().dropna(axis=0).apply(lambda x: np.round(x,2))
+            df.columns = df.columns.strftime('%Y-%m-%d')
+            df = df.sort_values (by=df.columns[-1],ascending=False).reset_index()
+            df = df.rename(columns={'formatted_address':'address'})
+            df = df.set_index('address')
+        return df
+    except Exception as e:
+        return str(e)
