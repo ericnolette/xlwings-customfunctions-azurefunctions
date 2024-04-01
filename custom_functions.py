@@ -7,8 +7,13 @@ from xlwings import pro
 from sqlalchemy import *
 from sqlalchemy.engine import create_engine
 from sqlalchemy import text
+import logging
 
-# engine = create_engine('bigquery://', credentials_info=os.environ["GCP_SA"])
+try:
+    engine = create_engine('bigquery://', credentials_info=os.environ["GCP_SA"])
+except Exception as e:
+    logging.error("NO DB CONNECTION!")
+    logging.error(f"Error: {e}")
 
 # SAMPLE 1: Hello World
 @pro.func
