@@ -15,6 +15,12 @@ except Exception as e:
     logging.error("NO DB CONNECTION!")
     logging.error(f"Error: {e}")
 
+
+@pro.func
+def print_client_engine():
+    engine = create_engine('bigquery://', credentials_info=os.environ["GCP_SA"])
+    return engine
+
 # SAMPLE 1: Hello World
 @pro.func
 def hello(name):
