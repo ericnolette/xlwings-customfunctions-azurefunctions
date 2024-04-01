@@ -1,15 +1,11 @@
 {
   "version": "2.0",
   "logging": {
-    "fileLoggingMode": "always",
     "applicationInsights": {
-        "enableLiveMetrics": true,
-        "samplingSettings": {
-            "isEnabled": true
-        }
-    },
-    "logLevel": {
-        "EventForwarder": "Information"
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
     }
   },
   "extensionBundle": {
