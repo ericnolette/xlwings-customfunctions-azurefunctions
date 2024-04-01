@@ -13,39 +13,30 @@ from google.oauth2 import service_account
 from google.cloud import bigquery
 import pandas as pd
 
+
 try:
-    engine = create_engine('bigquery://', credentials_info=json.loads(json.dumps(os.environ["GCP_SA"])))
+    credentials_env = os.environ["GCP_SA"]
+    client = bigquery.Client.from_service_account_info(credentials_env)
 except Exception as e:
-    logging.error("NO DB CONNECTION!")
-    logging.error(f"Error: {e}")
+    print(e)
 
-
-@pro.func
-def print_client_engine():
+pro.func
+def get_credentials():
     try:
-        engine = create_engine('bigquery://', credentials_info=json.loads(json.dumps(os.environ["GCP_SA"])))
-        message = f"Engine: {engine}"
+        credentials_env = os.environ["GCP_SA"]
+        credentials = service_account.Credentials.from_service_account_info(credentials_env)
+        client = bigquery.Client(credentials=credentials)
+        return client
     except Exception as e:
-        message = f"Error: {e}"
-    return message
+        return print(e)
 
-@pro.func
-def print_gcp_client():
+def get_creds_parsed():
     try:
-        gcp_client = bigquery.Client(credentials=service_account.Credentials.from_service_account_info(json.loads(json.dumps(os.environ["GCP_SA"]))))
-        message = f"Client: {gcp_client}"
+        credentials = service_account.Credentials.from_service_account_info(json.dumps(json.JSONDecoder().decode(os.environ["GCP_SA"])))
+        return credentials
     except Exception as e:
-        message = f"Error: {e}"
-    return message
+        return print(e)
 
-@pro.func
-def print_gcp_string():
-    try:
-        gcp_string = json.loads(json.dumps(os.environ["GCP_SA"]))
-        message = f"String: {gcp_string}"
-    except Exception as e:
-        message = f"Error: {e}"
-    return message
 
 # SAMPLE 1: Hello World
 @pro.func
@@ -157,3 +148,19 @@ def layoffs_fyi():
     with engine.begin() as conn:
         df = conn.execute(text(sql)).fetchall()
     return pd.DataFrame(df)
+
+@pro.func
+def layoffs_fyi():
+    sql = '''  
+    SELECT 
+    date(date) as date,
+    company,
+    employees_laid_off,
+    concat(cast(round(percent_laid_off*100,2) as string),"%") as percent_laid_off,
+    datamachine_load_time
+    FROM `datamachine-407200.macro.layoffs_fyi`
+    WHERE datamachine_load_time = (select max(datamachine_load_time) from `datamachine-407200.macro.layoffs_fyi`)
+    ORDER BY date desc
+    '''
+    df = client.query(sql).to_dataframe()
+    return df
