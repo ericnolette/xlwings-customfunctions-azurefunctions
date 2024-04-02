@@ -1,3 +1,5 @@
+#func azure functionapp publish datamachinesdma --python
+
 import datetime as dt
 import os
 import numpy as np
@@ -124,6 +126,7 @@ def layoffs_fyi():
         with bigquery.Client(credentials=credentials) as client:
             df = client.query(sql).to_dataframe()
             df['employees_laid_off'] = df['employees_laid_off'].fillna('')
+            df = df.set_index('date')
         return df
     except Exception as e:
         return str(e)
