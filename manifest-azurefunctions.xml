@@ -102,7 +102,7 @@
         <bt:Url id="Functions.Metadata.Url" DefaultValue="https://datamachinesdma.azurewebsites.net/api/xlwings/custom-functions-meta"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="Functions.Namespace" DefaultValue="XLWINGS"/>
+        <bt:String id="Functions.Namespace" DefaultValue="DMA"/>
         <bt:String id="MyTab.TabLabel" DefaultValue="xlwings Azure Functions" />
         <bt:String id="MyCommandsGroup.Label" DefaultValue="MyGroup" />
         <bt:String id="MyTaskpaneButton.Label" DefaultValue="xlwings Azure Functions" />
