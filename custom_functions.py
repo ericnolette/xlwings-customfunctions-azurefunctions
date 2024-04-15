@@ -136,6 +136,7 @@ def loopnet_usd_sqft():
     try:
         sql = '''
         select * from `datamachine-407200.commercial_real_estate.loopnet_agg`
+        where formatted_address in (select distinct(formatted_address) from `datamachine-407200.commercial_real_estate.loopnet_building_panel`)
         '''
         with bigquery.Client(credentials=credentials) as client:
             data = client.query(sql).to_dataframe()
