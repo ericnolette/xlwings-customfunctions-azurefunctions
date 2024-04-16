@@ -152,7 +152,8 @@ def loopnet_usd_sqft():
             df = df.sort_values (by=df.columns[-1],ascending=False).reset_index()
             df = df.rename(columns={'formatted_address':'address'})
             df = df.set_index('address')
-            df['diff'] = df[df.columns[-1]] - df[df.columns[0]]
+            df['lifetime_diff'] = df[df.columns[-1]] - df[df.columns[0]]
+            df['diff_latest'] = df[df.columns[-2]] - df[df.columns[-3]]
         return df
     except Exception as e:
         return str(e)
@@ -179,7 +180,8 @@ def loopnet_sqft():
             df = df.sort_values (by=df.columns[-1],ascending=False).reset_index()
             df = df.rename(columns={'formatted_address':'address'})
             df = df.set_index('address')
-            df['diff'] = df[df.columns[-1]] - df[df.columns[0]]
+            df['lifetime_diff'] = df[df.columns[-1]] - df[df.columns[0]]
+            df['diff_latest'] = df[df.columns[-2]] - df[df.columns[-3]]
         return df
     except Exception as e:
         return str(e)
