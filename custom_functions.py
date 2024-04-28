@@ -50,6 +50,7 @@ def add_one(values):
 
 # SAMPLE 4: pandas DataFrame as argument and return value
 
+
 @pro.func(namespace="pandas")
 @pro.arg("df", pd.DataFrame, index=False, header=False)
 @pro.ret(index=False, header=False)
@@ -152,7 +153,7 @@ def loopnet_usd_sqft():
             df = df.rename(columns={'formatted_address':'address'})
             df = df.set_index('address')
             df['lifetime_diff'] = df[df.columns[-1]] - df[df.columns[0]]
-            df['diff_latest'] = df[df.columns[-2]] - df[df.columns[-3]]
+            df['one_day_diff'] = df[df.columns[-1]] - df[df.columns[-2]]
         return df
     except Exception as e:
         return str(e)
