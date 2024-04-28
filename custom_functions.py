@@ -50,7 +50,6 @@ def add_one(values):
 
 # SAMPLE 4: pandas DataFrame as argument and return value
 
-
 @pro.func(namespace="pandas")
 @pro.arg("df", pd.DataFrame, index=False, header=False)
 @pro.ret(index=False, header=False)
